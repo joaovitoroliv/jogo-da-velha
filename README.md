@@ -18,10 +18,10 @@ O que é preciso saber ? HTML e Javascript (funções, objetos, matrizes em meno
 
 # 1) Configuração para o Tutorial:
 
-i) Certifique-se de ter uma versão recente do Node.js instalada.
+## i) Certifique-se de ter uma versão recente do Node.js instalada.
 https://nodejs.org/pt-br/
 
-ii) Siga as instruções de instalação do create-react-app para criar um novo projeto:
+##ii) Siga as instruções de instalação do create-react-app para criar um novo projeto:
 https://pt-br.reactjs.org/docs/create-a-new-react-app.html#create-react-app
 
 Create React App: Create React App é um ambiente confortável para aprender React, e é a melhor maneira de começar um single-page application em React.
@@ -48,9 +48,9 @@ import './index.css';
 
 # 2) Visão geral: 
 
-i) O que é React? O React é uma biblioteca JavaScript declarativa, eficiente e flexível para criar interfaces com o usuário. Ele permite compor UIs complexas a partir de pequenos e isolados códigos chamados “componentes”.
+## i) O que é React? O React é uma biblioteca JavaScript declarativa, eficiente e flexível para criar interfaces com o usuário. Ele permite compor UIs complexas a partir de pequenos e isolados códigos chamados “componentes”.
 
-ii) ShoppingList: 
+## ii) ShoppingList: 
 ````
 class ShoppingList extends React.Component {
   render() {
@@ -76,11 +76,11 @@ return React.createElement('div', {className: 'shopping-list'},
   React.createElement('ul', /* ... filhos de ul ... */)
 );
 ````
-iii) JSX: O JSX vem com todo o poder do JavaScript. Você pode colocar quaisquer expressões JavaScript dentro de chaves no JSX. Cada elemento React é um objeto JavaScript que você pode armazenar em uma variável ou passar em seu código.
+## iii) JSX: O JSX vem com todo o poder do JavaScript. Você pode colocar quaisquer expressões JavaScript dentro de chaves no JSX. Cada elemento React é um objeto JavaScript que você pode armazenar em uma variável ou passar em seu código.
 
 O componente ShoppingList acima apenas renderiza componentes internos do DOM como`` <div /> e <li />.`` Mas você também pode compor e renderizar componentes React personalizados. Por exemplo, agora podemos nos referir a toda a lista de compras escrevendo `` <ShoppingList />. ``Cada componente React é encapsulado e pode operar de forma independente; Isso permite que você construa interfaces complexas a partir de componentes simples.
 
-iv) Inspecionando o Código Inicial
+## iv) Inspecionando o Código Inicial
 
 Este Código Inicial é a base do que estamos construindo. Fornecemos o estilo CSS para que você só precise se concentrar no aprendizado do React e na programação do jogo da velha. 
 
@@ -92,7 +92,7 @@ Ao inspecionar o código index.js, você notará que temos três componentes Rea
 
 O componente Square renderiza um único <button> e o Board renderiza 9 squares. O componente Game renderiza um Board com valores que modificaremos mais tarde. Atualmente não há componentes interativos.
   
-v) Passando dados através de props:
+## v) Passando dados através de props:
 ````
 class Board extends React.Component {
   renderSquare(i) {
@@ -113,7 +113,7 @@ class Square extends React.Component {
   
 Parabéns! Você acabou de passar um “prop” de um componente pai Board para um componente filho Square. Passar props é a forma como os dados fluem em aplicações React, de pais para filhos.
 
-vi) Fazendo um componente interativo:
+## vi) Fazendo um componente interativo:
 
 Vamos preencher o componente Square com um “X” quando clicamos nele. Primeiro, altere a tag button que é retornada na função `` render()`` do componente Square para isto:
 ````
@@ -177,7 +177,7 @@ Ao chamar ``this.setState`` a partir de um manipulador ``onClick`` no método ``
 
 Quando você chama ``setState`` em um componente, o React atualiza automaticamente os componentes filhos dentro dele também.
 
-vi) Developer Tools:
+## vii) Developer Tools:
 
 A extensão React Devtools para Chrome e Firefox permite inspecionar uma árvore de componentes React com as ferramentas de desenvolvedor do seu navegador.
 
@@ -194,7 +194,7 @@ No entanto, observe que há algumas etapas extras para a extensão funcionar com
 
 # 3) Completando o jogo:
 
-i) Movendo o state para cima: 
+## i) Movendo o state para cima: 
 Atualmente, cada componente Quadrado (Square) mantém o estado do jogo. Para verificar o vencedor, nós vamos manter o valor de cada um dos 9 quadrados em uma posição.
 
 Podemos pensar que o Tabuleiro (Board) poderia apenas perguntar para cada Quadrado pelo seu estado. Apesar desse modelo ser possível no React, nós o desencorajamos, pois, o código se torna difícil de ser compreendido, suscetível à erros e difícil de refatorar. Ao invés disso, a melhor opção é guardar o estado do jogo no componente pai (Tabuleiro) ao invés de cada Quadrado. O componente do tabuleiro pode dizer para cada Quadrado o que pode ser exibido via prop, assim como fizemos quando passamos o número de cada Quadrado.
@@ -296,7 +296,7 @@ Como o componente Square não mantém mais state, os componentes Square receber�
 
 Note como na função ``handleClick``, nós chamamos ``.slice()`` para criar uma cópia do array de quadrados para o modificar ao invés de faze-lo no array existente. Explicaremos o motivo quando criarmos uma copia do array de quadrados na próxima sessão.
 
-ii) Por que imutabilidade é importante
+## ii) Por que imutabilidade é importante
 
 No exemplo de código anterior, sugerimos que você crie uma cópia do array squares usando o método ``slice()`` em vez de modificar o array existente. Agora discutiremos a imutabilidade e por que a imutabilidade é importante aprender.
 
@@ -333,7 +333,7 @@ O principal benefício da imutabilidade é que ela ajuda a construir componentes
 
 Você pode aprender mais sobre ``shouldComponentUpdate`` e como construir componentes puros lendo o artigo Otimizando Performance.
 
-iii) Componentes de Função:
+## iii) Componentes de Função:
 
 Nós vamos agora mudar o Square para ser um componente de função.
 
@@ -354,7 +354,7 @@ Nos modificamos this.props para props nas duas vezes que ela aparece.
 OBS: 
 Quando modificamos Square para ser um componente funcional, também modificamos ``onClick={() => this.props.onClick()}`` para uma versão mais curta: ``onClick={props.onClick}`` (note a ausência dos parentêses em ambos os lados).
 
-iv) Trocando Turnos:
+## iv) Trocando Turnos:
 
 Agora precisamos consertar um defeito óbvio em nosso Jogo da Velha: os “O”s não podem ser marcados no tabuleiro.
 
@@ -392,7 +392,7 @@ const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
 ````
 Depois de fazer essas mudanças, você deverá ter esse componente do Board:
 
-v) Declarando um Vencedor:
+## v) Declarando um Vencedor:
 
 Agora que mostramos quem jogará o próximo turno, também deveríamos mostrar quando o jogo foi vencido e que não há mais turnos a serem jogados. Copie essa função auxiliar e cole-a no final do arquivo:
 ````
@@ -443,6 +443,6 @@ Agora podemos modificar a função ``handleClick`` do Board para retornar antes,
     });
   }
 ````
-4) Adicionando a Viagem no Tempo (Time Travel): PROXIMO COMMIT
+# 4) Adicionando a Viagem no Tempo (Time Travel): PROXIMO COMMIT
 
 Como um último exercício, vamos tornar possível fazer uma “volta no tempo” até as jogadas anteriores que aconteceram no jogo.
