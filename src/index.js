@@ -12,47 +12,18 @@ import './index.css';
   }
   
   class Board extends React.Component {
-    constructor(props){
-      super(props);
-      this.state = { //estado inicial com array com 9 posicoes preenchidos por null (9 quadrados)
-        squares: Array(9).fill(null),
-        xIsNext: true, // Controlar quem é o proximo
-      };
-    }
-
-    handleClick(i){
-      const squares = this.state.squares.slice(); // Criar uma copia do aray de quadrados para modificar
-      if (calculateWinner(squares) || squares[i]){ // Se existir um ganhador ou o quadrado ja esteja ocupado (squares[i] != null), sai da funcao!
-        return;
-      }
-      squares[i] = this.state.xIsNext ? 'X' : 'O';
-      this.setState({
-        squares: squares,
-        xIsNext: !this.state.xIsNext, //inverter a ordem
-      });
-    }
     renderSquare(i) {
       return ( // passar duas props do Tabuleiro para o Quadrado: value e onClick
       <Square 
-      value={this.state.squares[i]}
-      onClick = {() => this.handleClick(i)}
+      value={this.props.squares[i]}
+      onClick = {() => this.props.onClick(i)}
        />
       );
     }
   
     render() {
-      const winner = calculateWinner(this.state.squares);
-      let status;
-      if (winner){
-        status = 'O jogador ' + winner + ' ganhou!!!!';
-      }
-      else {
-        status = 'Próximo a jogar: ' + (this.state.xIsNext ? 'X' : 'O'); // Indicar quem é o próximo jogador
-      }
-
       return ( //Renderiza 9 Squares
         <div>
-          <div className="status">{status}</div>
           <div className="board-row">
             {this.renderSquare(0)}
             {this.renderSquare(1)}
@@ -74,15 +45,80 @@ import './index.css';
   }
   
   class Game extends React.Component {
-    render() { // Renderiza um Board com valores que vamos modificar mais tarde
+    // Configurar o state inicial para o componente Game em seu constructor
+    constructor(props){
+      super(props);
+      this.state = {
+        history: [
+          {
+        squares: Array(9).fill(null), //estado inicial com array com 9 posicoes preenchidos por null (9 quadrados)
+        }
+      ],
+        stepNumber: 0,
+        xIsNext: true, // Controlar quem é o proximo
+      };
+    }
+    handleClick(i){
+      const history = this.state.history.slice(0, this.state.stepNumber + 1);
+      const current = history[history.length - 1];
+      const squares = current.squares.slice(); // Criar uma copia do aray de quadrados para modificar
+      if (calculateWinner(squares) || squares[i]){ // Se existir um ganhador ou o quadrado ja esteja ocupado (squares[i] != null), sai da funcao!
+        return;
+      }
+      squares[i] = this.state.xIsNext ? 'X' : 'O';
+      this.setState({
+        history: history.concat([
+          {
+          squares: squares,
+        }
+      ]),
+        stepNumber: history.length,
+        xIsNext: !this.state.xIsNext, //inverter a ordem
+      });
+    }
+
+    jumpTo(step){
+      this.setState({
+        stepNumber: step,
+        xIsNext: (step % 2) === 0,
+      });
+    }
+
+    render() {
+      const history = this.state.history;
+      const current = history[this.state.stepNumber];
+      const winner = calculateWinner(current.squares);
+
+      const moves = history.map((step, move) => {
+        const desc = move ?
+        'Go to move #' + move :
+        'Go to game start';
+        return(
+          <li key={move}>
+            <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          </li>
+        );
+      });
+
+    let status;
+    if (winner){
+        status = 'O jogador ' + winner + ' ganhou!!!!';
+      }
+      else {
+        status = 'Próximo a jogar: ' + (this.state.xIsNext ? 'X' : 'O'); // Indicar quem é o próximo jogador
+      }
+      // Renderiza um Board com valores que vamos modificar mais tarde
       return (
         <div className="game">
           <div className="game-board">
-            <Board />
+            <Board 
+              squares={current.squares}
+              onClick={(i) => this.handleClick(i)}
+            />
           </div>
           <div className="game-info">
-            <div>{/* status */}</div>
-            <ol>{/* TODO */}</ol>
+            <div>{status}</div>
+            <ol>{moves}</ol>
           </div>
         </div>
       );
