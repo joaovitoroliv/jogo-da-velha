@@ -91,8 +91,8 @@ import './index.css';
 
       const moves = history.map((step, move) => {
         const desc = move ?
-        'Go to move #' + move :
-        'Go to game start';
+        'Ir para a jogada #' + move :
+        'Reiniciar';
         return(
           <li key={move}>
             <button onClick={() => this.jumpTo(move)}>{desc}</button>
@@ -117,8 +117,11 @@ import './index.css';
             />
           </div>
           <div className="game-info">
+            <strong><div>Created by joaovitoroliv</div></strong>
+            <a className="github" href="https://github.com/joaovitoroliv/jogo-da-velha" target="_blank"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" target="_blank"/></a>
             <div>{status}</div>
             <ol>{moves}</ol>
+            
           </div>
         </div>
       );

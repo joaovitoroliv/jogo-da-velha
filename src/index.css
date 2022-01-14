@@ -1,12 +1,17 @@
 body {
-    font: 14px "Century Gothic", Futura, sans-serif;
+    font: 16px "Century Gothic", Futura, sans-serif;
     margin: 20px;
   }
   
   ol, ul {
     padding-left: 30px;
   }
-  
+
+  .github {
+    display: flex;
+    margin: 6px 0px;
+  }
+
   .board-row:after {
     clear: both;
     content: "";
