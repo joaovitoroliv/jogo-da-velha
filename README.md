@@ -443,10 +443,8 @@ Agora podemos modificar a função ``handleClick`` do Board para retornar antes,
     });
   }
 ````
-# 4) Adicionando a Viagem no Tempo (Time Travel): PROXIMO COMMIT
 
-<<<<<<< HEAD
-# 4) Adicionando a Viagem no Tempo (Time Travel): PROXIMO COMMIT
+# 4) Adicionando a Viagem no Tempo (Time Travel): 
 
 Como um último exercício, vamos tornar possível fazer uma “volta no tempo” até as jogadas anteriores que aconteceram no jogo.
 
